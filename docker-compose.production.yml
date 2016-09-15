@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+  db:
+    image: mariadb
+
+  back:
+    build: backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./backend/src:/opt/demo"
+    links:
+      - db
+
+  front:
+    build: frontend
+    ports:
+      - "80:80"

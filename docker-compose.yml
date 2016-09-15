@@ -1,9 +1,27 @@
 version: '2'
 
 services:
-  web:
-    build: .
+  db:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: your
+      MYSQL_USER: user
+      MYSQL_PASSWORD: and
+      MYSQL_DATABASE: password
+
+  back:
+    build: backend
     ports:
       - "3000:3000"
     volumes:
-      - "./src:/opt/demo"
+      - "./backend/src:/opt/demo"
+    links:
+      - db
+
+  front:
+    build: frontend
+    ports:
+      - "1841:1841"
+    command: sencha app watch
+    volumes:
+      - "./frontend/src:/opt/demo"
